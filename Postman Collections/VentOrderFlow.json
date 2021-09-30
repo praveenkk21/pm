@@ -1,0 +1,1087 @@
+{
+  "info": {
+    "_postman_id": "3d21e0bb-e3c4-46d0-96f4-6f8aa60bbbb2",
+    "name": "Orderflow checking",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "order add Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "c1867fc9-656e-4a85-b14a-ec253202afd3",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Body matches string = Order id\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OrderID\");\r",
+              "});\r",
+              "pm.test(\"Body matches string = OrderNo\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OrderNo\");\r",
+              "});\r",
+              "\r",
+              "value = pm.response.json();\r",
+              "orderid =value[0].OrderID;\r",
+              "console.log(orderid);\r",
+              "pm.environment.set(\"OrderID\", orderid);\r",
+              "\r",
+              "console.log(\"Collecttion level post test\")\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "2212df60-9738-4f14-9f07-00fe07311158",
+            "exec": [
+              "console.log(\"Collecttion level post pre req\")"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "0c339835-122b-497a-9753-0c4b177fa1d2",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "hha",
+            "value": "1"
+          },
+          {
+            "key": "user",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "instance_code",
+            "value": "working",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\"{\\\"order_date\\\":\\\"05/24/2021\\\",\\\"order_effective_date\\\":\\\"05/24/2021 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"111625\\\",\\\"EpisodeID\\\":198264,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"test by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"05/24/2021\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+          "options": {
+            "raw": {}
+          }
+        },
+        "url": {
+          "raw": "{{orderurl}}/orders/subforms/ventilators/clients/:client",
+          "host": [
+            "{{orderurl}}"
+          ],
+          "path": [
+            "orders",
+            "subforms",
+            "ventilators",
+            "clients",
+            ":client"
+          ],
+          "variable": [
+            {
+              "key": "client",
+              "value": "111625",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "0feb7437-9f28-4fd1-9551-0ecbfa3cb157",
+          "name": "working order add Copy",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "instance_code",
+                "value": "working",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{\\\"order_date\\\":\\\"05/24/2021\\\",\\\"order_effective_date\\\":\\\"05/24/2021 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"111625\\\",\\\"EpisodeID\\\":198264,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"test by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"05/24/2021\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": {
+              "raw": "{{orderurl}}/orders/subforms/ventilators/clients/:client",
+              "host": [
+                "{{orderurl}}"
+              ],
+              "path": [
+                "orders",
+                "subforms",
+                "ventilators",
+                "clients",
+                ":client"
+              ],
+              "variable": [
+                {
+                  "key": "client",
+                  "value": "111625"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Mon, 27 Sep 2021 03:10:18 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "8ce0582b-869c-45c7-ab5b-73cb93618cfe"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "[{\"OrderNo\":\"V-7156\",\"OrderID\":1045224}]"
+        },
+        {
+          "id": "7f571ecd-db66-44dd-a139-fbf8a0d1ad5b",
+          "name": "Local Prod order add Copy",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "instance_code",
+                "value": "working",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{\\\"order_date\\\":\\\"05/24/2021\\\",\\\"order_effective_date\\\":\\\"05/24/2021 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"111625\\\",\\\"EpisodeID\\\":198264,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"test by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"05/24/2021\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": {
+              "raw": "{{orderurl}}/orders/subforms/ventilators/clients/:client",
+              "host": [
+                "{{orderurl}}"
+              ],
+              "path": [
+                "orders",
+                "subforms",
+                "ventilators",
+                "clients",
+                ":client"
+              ],
+              "variable": [
+                {
+                  "key": "client",
+                  "value": "111625"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 03:06:51 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "27966adb-4502-49a4-a249-93e37728fcc4"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "[{\"OrderNo\":\"V-7194\",\"OrderID\":1045266}]"
+        }
+      ]
+    },
+    {
+      "name": "order add Copy 2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "47a2e023-cb02-4468-bb3e-905e333da515",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Body matches string = Order id\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OrderID\");\r",
+              "});\r",
+              "pm.test(\"Body matches string = OrderNo\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OrderNo\");\r",
+              "});\r",
+              "\r",
+              "value = pm.response.json();\r",
+              "orderid =value[0].OrderID;\r",
+              "console.log(orderid);\r",
+              "pm.environment.set(\"OrderID\", orderid);\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "bab34fb1-6aeb-4164-9653-6bb086287440",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "hha",
+            "value": "1"
+          },
+          {
+            "key": "user",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "instance_code",
+            "value": "working",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\"{\\\"order_date\\\":\\\"08/05/2020\\\",\\\"order_effective_date\\\":\\\"08/05/2020 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"s3\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"111625\\\",\\\"EpisodeID\\\":198264,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"test by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"05/24/2021\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+          "options": {
+            "raw": {}
+          }
+        },
+        "url": {
+          "raw": "{{orderurl}}/orders/subforms/ventilators/clients/:client",
+          "host": [
+            "{{orderurl}}"
+          ],
+          "path": [
+            "orders",
+            "subforms",
+            "ventilators",
+            "clients",
+            ":client"
+          ],
+          "variable": [
+            {
+              "key": "client",
+              "value": "111625",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "526665ab-21c2-4911-bea1-4c3eaea697be",
+          "name": "working order add Copy 2",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "instance_code",
+                "value": "working",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{\\\"order_date\\\":\\\"08/05/2020\\\",\\\"order_effective_date\\\":\\\"08/05/2020 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"s3\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"111625\\\",\\\"EpisodeID\\\":198264,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"test by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"05/24/2021\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": {
+              "raw": "{{orderurl}}/orders/subforms/ventilators/clients/:client",
+              "host": [
+                "{{orderurl}}"
+              ],
+              "path": [
+                "orders",
+                "subforms",
+                "ventilators",
+                "clients",
+                ":client"
+              ],
+              "variable": [
+                {
+                  "key": "client",
+                  "value": "111625"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 02:44:34 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "965afcf0-873e-446f-bdec-21a795980a1b"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "[{\"OrderNo\":\"V-7190\",\"OrderID\":1045262}]"
+        },
+        {
+          "id": "213bc4f0-6069-4f7d-a14c-b84ba8850882",
+          "name": "Local Prod order add Copy 2",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "instance_code",
+                "value": "working",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{\\\"order_date\\\":\\\"08/05/2020\\\",\\\"order_effective_date\\\":\\\"08/05/2020 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"s3\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"111625\\\",\\\"EpisodeID\\\":198264,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"test by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"05/24/2021\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": {
+              "raw": "{{orderurl}}/orders/subforms/ventilators/clients/:client",
+              "host": [
+                "{{orderurl}}"
+              ],
+              "path": [
+                "orders",
+                "subforms",
+                "ventilators",
+                "clients",
+                ":client"
+              ],
+              "variable": [
+                {
+                  "key": "client",
+                  "value": "111625"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 03:10:15 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "e1dfed96-7c12-4143-8c61-d5522bb55543"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "[{\"OrderNo\":\"V-7197\",\"OrderID\":1045269}]"
+        }
+      ]
+    },
+    {
+      "name": "Update order Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "3981e50d-2550-4d27-a2df-a214a87b63fe",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Body matches string\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OrderID\");\r",
+              "});\r",
+              "pm.test(\"Body matches string\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OrderNo\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "bab1c1b6-8e3f-44b7-985b-b9348d2c7dee",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "hha",
+            "value": "1"
+          },
+          {
+            "key": "user",
+            "value": "1"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "instance_code",
+            "value": "Working",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\"{\\\"order_date\\\":\\\"05/24/2021\\\",\\\"order_effective_date\\\":\\\"05/24/2021 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"98142\\\",\\\"EpisodeID\\\":172526,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"testing by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+          "options": {
+            "raw": {}
+          }
+        },
+        "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+      },
+      "response": [
+        {
+          "id": "9985019d-4c61-440b-a323-529a7468c2e0",
+          "name": "working Update order Copy",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "instance_code",
+                "value": "Working",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{\\\"order_date\\\":\\\"05/24/2021\\\",\\\"order_effective_date\\\":\\\"05/24/2021 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"98142\\\",\\\"EpisodeID\\\":172526,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"testing by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 02:45:11 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "ec0329e2-968c-412e-9fff-eb2786b71a44"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "[{\"OrderNo\":\"\",\"OrderID\":1045224}]"
+        },
+        {
+          "id": "1e8f8db4-f4ed-47c9-88ae-713ede3f0dd5",
+          "name": "Local Prod Update order Copy",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "instance_code",
+                "value": "Working",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"{\\\"order_date\\\":\\\"05/24/2021\\\",\\\"order_effective_date\\\":\\\"05/24/2021 03:00\\\",\\\"vent_form_order_json\\\":{\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"sections\\\":[{\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"section_fields\\\":[{\\\"field_name\\\":\\\"ventilator\\\",\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_name\\\":\\\"mode\\\",\\\"field_value\\\":\\\"Control\\\"},{\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"field_value\\\":\\\"O2\\\"},{\\\"field_name\\\":\\\"breath_rate\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"tidal_volume\\\",\\\"field_value\\\":\\\"FF\\\"},{\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_name\\\":\\\"peep\\\",\\\"field_value\\\":\\\"RT\\\"},{\\\"field_name\\\":\\\"cycle\\\",\\\"field_value\\\":\\\"AA\\\"},{\\\"field_name\\\":\\\"pressue_control\\\",\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"field_value\\\":\\\"SA\\\"},{\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_name\\\":\\\"rise_time\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"disconnect_time\\\",\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_name\\\":\\\"pressure_support\\\",\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_name\\\":\\\"epap_max_min\\\",\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"field_value\\\":\\\"GDG\\\"}]}]}]},\\\"otherOrderFieldsJson\\\":{\\\"ClientID\\\":\\\"98142\\\",\\\"EpisodeID\\\":172526,\\\"Physician\\\":\\\"41157\\\",\\\"isVerbalOrder\\\":0,\\\"Description\\\":\\\"testing by praveen\\\",\\\"Comments\\\":\\\"\\\",\\\"OnBehalfOfClincian\\\":0,\\\"OrderRequestedBy\\\":\\\"39885\\\",\\\"SignedClinician\\\":0,\\\"IsSelfSign\\\":0,\\\"SentDate\\\":\\\"\\\",\\\"VentilatorSettingID\\\":0,\\\"PageID\\\":0,\\\"Order_No\\\":\\\"\\\",\\\"IsApprovedbyAssistant\\\":\\\"0\\\",\\\"DoNotRequirePhySign\\\":\\\"0\\\",\\\"IsPrintPreviewClick\\\":0,\\\"OrderTime\\\":\\\"05:00\\\",\\\"LibraryFormId\\\":\\\"610\\\"}}\"",
+              "options": {
+                "raw": {}
+              }
+            },
+            "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 03:11:03 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "7eaccd66-f7c0-4d06-adeb-570cf95e2d5e"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "[{\"OrderNo\":\"\",\"OrderID\":1045269}]"
+        }
+      ]
+    },
+    {
+      "name": "View order Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "f9b996da-caae-4408-b67c-bacdcd3f6bf9",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Body matches string\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"Change_Order_id\");\r",
+              "});\r",
+              "pm.test(\"Body matches string\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"vent_order_values\");\r",
+              "});\r",
+              "pm.test(\"Body matches string\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"order_date\");\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "402a0ed7-0c27-4f76-954c-72cfc54ea4e7",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "hha",
+            "value": "1"
+          },
+          {
+            "key": "user",
+            "value": "1"
+          },
+          {
+            "key": "instance_code",
+            "value": "working",
+            "type": "text"
+          }
+        ],
+        "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+      },
+      "response": [
+        {
+          "id": "6bb62810-6c9c-48bc-828f-f4f88c63c765",
+          "name": "working View order Copy",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "instance_code",
+                "value": "working",
+                "type": "text"
+              }
+            ],
+            "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 02:45:22 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "bef26d3f-21ba-47d9-86a1-14de430e6e57"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "{\"Change_Order_id\":1045224,\"order_date\":\"2021-05-24T00:00:00\",\"OrderNo\":\"V-7156\",\"order_effective_from\":\"05/24/21  3:00:00 AM\",\"vent_order_values\":\"{\\n  \\\"shifts\\\": [\\n    {\\n      \\\"shift_name\\\": \\\"NIGHT SHIFT\\\",\\n      \\\"sections\\\": [\\n        {\\n          \\\"section_name\\\": \\\"ventilator_settings\\\",\\n          \\\"section_fields\\\": [\\n            {\\n              \\\"field_name\\\": \\\"ventilator\\\",\\n              \\\"field_value\\\": \\\"LTV 950\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"mode\\\",\\n              \\\"field_value\\\": \\\"Control\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"o2_litre_flow_lpm\\\",\\n              \\\"field_value\\\": \\\"O2\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"breath_rate\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"tidal_volume\\\",\\n              \\\"field_value\\\": \\\"FF\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"avaps_on_off\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"ivaps_on_off\\\",\\n              \\\"field_value\\\": \\\"ZZ\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"peep\\\",\\n              \\\"field_value\\\": \\\"RT\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"cycle\\\",\\n              \\\"field_value\\\": \\\"AA\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"pressue_control\\\",\\n              \\\"field_value\\\": \\\"GRGR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"peak_inspiratory_flow\\\",\\n              \\\"field_value\\\": \\\"SA\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"inspiratory_pressure\\\",\\n              \\\"field_value\\\": \\\"FDF\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"inspiratory_time\\\",\\n              \\\"field_value\\\": \\\"AADD\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"rise_time\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"disconnect_time\\\",\\n              \\\"field_value\\\": \\\"DAD\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"pressure_support\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"ipap_max_min\\\",\\n              \\\"field_value\\\": \\\"ADAS\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"epap_max_min\\\",\\n              \\\"field_value\\\": \\\"RYY\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"ramp_time_length_start_pressure\\\",\\n              \\\"field_value\\\": \\\"SADA\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"apnea_rate_high_low\\\",\\n              \\\"field_value\\\": \\\"RYR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"apnea_alarm_high_low\\\",\\n              \\\"field_value\\\": \\\"FASF\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"vte_alarm_high_low\\\",\\n              \\\"field_value\\\": \\\"GDG\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"respiratory_rate_alarm\\\",\\n              \\\"field_value\\\": \\\"ASFS\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"minute_ventilation_alarm\\\",\\n              \\\"field_value\\\": \\\"GDG\\\"\\n            }\\n          ]\\n        }\\n      ]\\n    }\\n  ]\\n}\",\"vent_form_final_fields\":\"{\\\"form_sections\\\":[{\\\"section_title\\\":\\\"Ventilator Settings (must correspond to order)\\\",\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"show_in_order\\\":true,\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"section_fields\\\":[{\\\"field_title\\\":\\\"Ventilator\\\",\\\"field_name\\\":\\\"ventilator\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"LTV 950\\\",\\\"LTV1150\\\",\\\"Trilogy\\\",\\\"Astral\\\",\\\"PP Machine\\\",\\\"Other\\\"],\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_title\\\":\\\"Mode\\\",\\\"field_name\\\":\\\"mode\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Control\\\",\\\"Assist Control\\\",\\\"SIMV\\\",\\\"CPAP\\\",\\\"BIPAP\\\",\\\"APAP\\\",\\\"PC\\\",\\\"Assist Control/VC\\\",\\\"Assist Control/PC\\\",\\\"SIMV/VC\\\",\\\"SIMV/PC\\\"],\\\"field_value\\\":\\\"Control\\\"},{\\\"field_title\\\":\\\"O2 Liter Flow (LPM)\\\",\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"O2\\\"},{\\\"field_title\\\":\\\"Breath Rate\\\",\\\"field_name\\\":\\\"breath_rate\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"Tidal Volume\\\",\\\"field_name\\\":\\\"tidal_volume\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"FF\\\"},{\\\"field_title\\\":\\\"AVAPS On/Off\\\",\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"IVAPS On/Off\\\",\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_title\\\":\\\"PEEP\\\",\\\"field_name\\\":\\\"peep\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RT\\\"},{\\\"field_title\\\":\\\"Cycle\\\",\\\"field_name\\\":\\\"cycle\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"AA\\\"},{\\\"field_title\\\":\\\"Pressure Control\\\",\\\"field_name\\\":\\\"pressue_control\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_title\\\":\\\"Peak Inspiratory Flow\\\",\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"SA\\\"},{\\\"field_title\\\":\\\"Inspiratory Pressure\\\",\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_title\\\":\\\"Inspiratory Time\\\",\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_title\\\":\\\"Rise Time\\\",\\\"field_name\\\":\\\"rise_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"Disconnect Time\\\",\\\"field_name\\\":\\\"disconnect_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_title\\\":\\\"Pressure Support\\\",\\\"field_name\\\":\\\"pressure_support\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"IPAP Max/Min\\\",\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_title\\\":\\\"EPAP Max/Min\\\",\\\"field_name\\\":\\\"epap_max_min\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_title\\\":\\\"Ramp time length/start pressure\\\",\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_title\\\":\\\"Apnea Rate High/Low\\\",\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_title\\\":\\\"Apnea Alarm High/Low\\\",\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_title\\\":\\\"Vte Alarm High/Low\\\",\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_title\\\":\\\"Respiratory Rate Alarm High/Low\\\",\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_title\\\":\\\"Minute Ventilation Alarm High/Low\\\",\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"GDG\\\"}]}],\\\"require_comments\\\":true,\\\"comments_max_length\\\":1000},{\\\"section_title\\\":\\\"Client and Ventilator Readings\\\",\\\"section_name\\\":\\\"client_settings\\\",\\\"show_in_order\\\":false,\\\"section_fields\\\":[{\\\"field_title\\\":\\\"Heart Rate\\\",\\\"field_name\\\":\\\"client_settings_heart_rate\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Respiratory Rate\\\",\\\"field_name\\\":\\\"client_settings_respiratory_rate\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"O2 Liter Flow (LPM)\\\",\\\"field_name\\\":\\\"client_settings_o2_liter_flow\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Pulse Oximeter Reading\\\",\\\"field_name\\\":\\\"client_settings_oximeter_reading\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"VE (Minute Volume)\\\",\\\"field_name\\\":\\\"client_settings_ve_minute_volumn\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"I:E (Inspiratory/Expiratory Ratio)\\\",\\\"field_name\\\":\\\"client_settings_ie_ratio\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"PIP (Peak Inspiratory Pressure)\\\",\\\"field_name\\\":\\\"client_settings_pip\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"MAP (Mean Airway Pressure)\\\",\\\"field_name\\\":\\\"client_settings_map\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"PEEP (Positive End Expiratory Pressure)\\\",\\\"field_name\\\":\\\"client_settings_peep\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Pressure Alarms\\\",\\\"field_name\\\":\\\"client_settings_pressure_alarms\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Minute Volume Alarm\\\",\\\"field_name\\\":\\\"client_settings_minute_volume_alarm\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"VTE (Exhaled Tidal Volume)\\\",\\\"field_name\\\":\\\"client_settings_exhaled_tidal_volume\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Heater/Humidifier Setting  (make fill-in box Alpha/Num)\\\",\\\"field_name\\\":\\\"client_settings_heater_humifier_settings\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"VTI (Tidal Volume Inhaled)\\\",\\\"field_name\\\":\\\"client_settings_tidal_volume_inhaled\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Inspiratory Time\\\",\\\"field_name\\\":\\\"client_settings_inspiratory_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Leak\\\",\\\"field_name\\\":\\\"client_settings_leak\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10}],\\\"require_comments\\\":true,\\\"comments_max_length\\\":1000},{\\\"section_title\\\":\\\"Safety Checks\\\",\\\"section_name\\\":\\\"safety_checks\\\",\\\"show_in_order\\\":false,\\\"section_fields\\\":[{\\\"field_title\\\":\\\"Power source\\\",\\\"field_name\\\":\\\"safety_checks_power_source\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"AC\\\",\\\"EB\\\",\\\"IB\\\"]},{\\\"field_title\\\":\\\"Back-up Battery Status\\\",\\\"field_name\\\":\\\"safety_checks_backup_battery_status\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Back Up Ventilator Settings Checked\\\",\\\"field_name\\\":\\\"safety_checks_Back_Up_Ventilator_Settings_Checked\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\",\\\"NA\\\",\\\"No Backup Ventilator Present\\\"]},{\\\"field_title\\\":\\\"O2 Tank Present \\\",\\\"field_name\\\":\\\"safety_checks_o2_tank_present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\",\\\"NA\\\"]},{\\\"field_title\\\":\\\"Portable O2 Present \\\",\\\"field_name\\\":\\\"safety_checks_Portable_O2_Present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\",\\\"NA\\\"]},{\\\"field_title\\\":\\\"Appropriate Sized Mask Present \\\",\\\"field_name\\\":\\\"safety_checks_Appropriate_Sized_Mask_Present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Leak Function (BiPAP/CPAP)\\\",\\\"field_name\\\":\\\"safety_checks_Leak_Function_BiPAP_CPAP\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"BiPAP\\\",\\\"CPAP\\\"]},{\\\"field_title\\\":\\\"Leak Test Q Shift \\\",\\\"field_name\\\":\\\"safety_checks_Leak_Test_Q_Shift\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Heater/Humidifier Water Level\\\",\\\"field_name\\\":\\\"safety_checks_Heater_Humidifier_Water_Level\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Emergency Circuit Prepared \\\",\\\"field_name\\\":\\\"safety_checks_Emergency_circuit_prepared\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Condensation emptied as needed \\\",\\\"field_name\\\":\\\"safety_checks_Condensation_emptied_as_needed\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Ambu bag- appropriate sized bag and mask present \\\",\\\"field_name\\\":\\\"safety_checks_Ambubag_appropriate_sized_bag_and_mask_present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Filters cleaned/changed \\\",\\\"field_name\\\":\\\"safety_checks_Filters_cleaned_changed\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Trachs (same and one size smaller) present \\\",\\\"field_name\\\":\\\"safety_checks_Trachs_same_and_one_size_smaller_present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]}],\\\"require_comments\\\":true,\\\"comments_max_length\\\":1000}]}\"}"
+        },
+        {
+          "id": "1fe98291-3a5b-4c4e-8970-e73407ddab42",
+          "name": "Local Prod View order Copy",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "instance_code",
+                "value": "working",
+                "type": "text"
+              }
+            ],
+            "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 03:11:36 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "bd37caec-89cb-4c92-9641-255eed86c156"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "{\"Change_Order_id\":1045269,\"order_date\":\"2021-05-24T00:00:00\",\"OrderNo\":\"V-7197\",\"order_effective_from\":\"05/24/21  3:00:00 AM\",\"vent_order_values\":\"{\\n  \\\"shifts\\\": [\\n    {\\n      \\\"shift_name\\\": \\\"NIGHT SHIFT\\\",\\n      \\\"sections\\\": [\\n        {\\n          \\\"section_name\\\": \\\"ventilator_settings\\\",\\n          \\\"section_fields\\\": [\\n            {\\n              \\\"field_name\\\": \\\"ventilator\\\",\\n              \\\"field_value\\\": \\\"LTV 950\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"mode\\\",\\n              \\\"field_value\\\": \\\"Control\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"o2_litre_flow_lpm\\\",\\n              \\\"field_value\\\": \\\"O2\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"breath_rate\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"tidal_volume\\\",\\n              \\\"field_value\\\": \\\"FF\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"avaps_on_off\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"ivaps_on_off\\\",\\n              \\\"field_value\\\": \\\"ZZ\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"peep\\\",\\n              \\\"field_value\\\": \\\"RT\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"cycle\\\",\\n              \\\"field_value\\\": \\\"AA\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"pressue_control\\\",\\n              \\\"field_value\\\": \\\"GRGR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"peak_inspiratory_flow\\\",\\n              \\\"field_value\\\": \\\"SA\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"inspiratory_pressure\\\",\\n              \\\"field_value\\\": \\\"FDF\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"inspiratory_time\\\",\\n              \\\"field_value\\\": \\\"AADD\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"rise_time\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"disconnect_time\\\",\\n              \\\"field_value\\\": \\\"DAD\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"pressure_support\\\",\\n              \\\"field_value\\\": \\\"RTR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"ipap_max_min\\\",\\n              \\\"field_value\\\": \\\"ADAS\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"epap_max_min\\\",\\n              \\\"field_value\\\": \\\"RYY\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"ramp_time_length_start_pressure\\\",\\n              \\\"field_value\\\": \\\"SADA\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"apnea_rate_high_low\\\",\\n              \\\"field_value\\\": \\\"RYR\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"apnea_alarm_high_low\\\",\\n              \\\"field_value\\\": \\\"FASF\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"vte_alarm_high_low\\\",\\n              \\\"field_value\\\": \\\"GDG\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"respiratory_rate_alarm\\\",\\n              \\\"field_value\\\": \\\"ASFS\\\"\\n            },\\n            {\\n              \\\"field_name\\\": \\\"minute_ventilation_alarm\\\",\\n              \\\"field_value\\\": \\\"GDG\\\"\\n            }\\n          ]\\n        }\\n      ]\\n    }\\n  ]\\n}\",\"vent_form_final_fields\":\"{\\\"form_sections\\\":[{\\\"section_title\\\":\\\"Ventilator Settings (must correspond to order)\\\",\\\"section_name\\\":\\\"ventilator_settings\\\",\\\"show_in_order\\\":true,\\\"shifts\\\":[{\\\"shift_name\\\":\\\"NIGHT SHIFT\\\",\\\"section_fields\\\":[{\\\"field_title\\\":\\\"Ventilator\\\",\\\"field_name\\\":\\\"ventilator\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"LTV 950\\\",\\\"LTV1150\\\",\\\"Trilogy\\\",\\\"Astral\\\",\\\"PP Machine\\\",\\\"Other\\\"],\\\"field_value\\\":\\\"LTV 950\\\"},{\\\"field_title\\\":\\\"Mode\\\",\\\"field_name\\\":\\\"mode\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Control\\\",\\\"Assist Control\\\",\\\"SIMV\\\",\\\"CPAP\\\",\\\"BIPAP\\\",\\\"APAP\\\",\\\"PC\\\",\\\"Assist Control/VC\\\",\\\"Assist Control/PC\\\",\\\"SIMV/VC\\\",\\\"SIMV/PC\\\"],\\\"field_value\\\":\\\"Control\\\"},{\\\"field_title\\\":\\\"O2 Liter Flow (LPM)\\\",\\\"field_name\\\":\\\"o2_litre_flow_lpm\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"O2\\\"},{\\\"field_title\\\":\\\"Breath Rate\\\",\\\"field_name\\\":\\\"breath_rate\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"Tidal Volume\\\",\\\"field_name\\\":\\\"tidal_volume\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"FF\\\"},{\\\"field_title\\\":\\\"AVAPS On/Off\\\",\\\"field_name\\\":\\\"avaps_on_off\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"IVAPS On/Off\\\",\\\"field_name\\\":\\\"ivaps_on_off\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"ZZ\\\"},{\\\"field_title\\\":\\\"PEEP\\\",\\\"field_name\\\":\\\"peep\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RT\\\"},{\\\"field_title\\\":\\\"Cycle\\\",\\\"field_name\\\":\\\"cycle\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"AA\\\"},{\\\"field_title\\\":\\\"Pressure Control\\\",\\\"field_name\\\":\\\"pressue_control\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"GRGR\\\"},{\\\"field_title\\\":\\\"Peak Inspiratory Flow\\\",\\\"field_name\\\":\\\"peak_inspiratory_flow\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"SA\\\"},{\\\"field_title\\\":\\\"Inspiratory Pressure\\\",\\\"field_name\\\":\\\"inspiratory_pressure\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"FDF\\\"},{\\\"field_title\\\":\\\"Inspiratory Time\\\",\\\"field_name\\\":\\\"inspiratory_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"AADD\\\"},{\\\"field_title\\\":\\\"Rise Time\\\",\\\"field_name\\\":\\\"rise_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"Disconnect Time\\\",\\\"field_name\\\":\\\"disconnect_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"DAD\\\"},{\\\"field_title\\\":\\\"Pressure Support\\\",\\\"field_name\\\":\\\"pressure_support\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RTR\\\"},{\\\"field_title\\\":\\\"IPAP Max/Min\\\",\\\"field_name\\\":\\\"ipap_max_min\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"ADAS\\\"},{\\\"field_title\\\":\\\"EPAP Max/Min\\\",\\\"field_name\\\":\\\"epap_max_min\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RYY\\\"},{\\\"field_title\\\":\\\"Ramp time length/start pressure\\\",\\\"field_name\\\":\\\"ramp_time_length_start_pressure\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"SADA\\\"},{\\\"field_title\\\":\\\"Apnea Rate High/Low\\\",\\\"field_name\\\":\\\"apnea_rate_high_low\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"RYR\\\"},{\\\"field_title\\\":\\\"Apnea Alarm High/Low\\\",\\\"field_name\\\":\\\"apnea_alarm_high_low\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"FASF\\\"},{\\\"field_title\\\":\\\"Vte Alarm High/Low\\\",\\\"field_name\\\":\\\"vte_alarm_high_low\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"GDG\\\"},{\\\"field_title\\\":\\\"Respiratory Rate Alarm High/Low\\\",\\\"field_name\\\":\\\"respiratory_rate_alarm\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"ASFS\\\"},{\\\"field_title\\\":\\\"Minute Ventilation Alarm High/Low\\\",\\\"field_name\\\":\\\"minute_ventilation_alarm\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10,\\\"field_value\\\":\\\"GDG\\\"}]}],\\\"require_comments\\\":true,\\\"comments_max_length\\\":1000},{\\\"section_title\\\":\\\"Client and Ventilator Readings\\\",\\\"section_name\\\":\\\"client_settings\\\",\\\"show_in_order\\\":false,\\\"section_fields\\\":[{\\\"field_title\\\":\\\"Heart Rate\\\",\\\"field_name\\\":\\\"client_settings_heart_rate\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Respiratory Rate\\\",\\\"field_name\\\":\\\"client_settings_respiratory_rate\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"O2 Liter Flow (LPM)\\\",\\\"field_name\\\":\\\"client_settings_o2_liter_flow\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Pulse Oximeter Reading\\\",\\\"field_name\\\":\\\"client_settings_oximeter_reading\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"VE (Minute Volume)\\\",\\\"field_name\\\":\\\"client_settings_ve_minute_volumn\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"I:E (Inspiratory/Expiratory Ratio)\\\",\\\"field_name\\\":\\\"client_settings_ie_ratio\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"PIP (Peak Inspiratory Pressure)\\\",\\\"field_name\\\":\\\"client_settings_pip\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"MAP (Mean Airway Pressure)\\\",\\\"field_name\\\":\\\"client_settings_map\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"PEEP (Positive End Expiratory Pressure)\\\",\\\"field_name\\\":\\\"client_settings_peep\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Pressure Alarms\\\",\\\"field_name\\\":\\\"client_settings_pressure_alarms\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Minute Volume Alarm\\\",\\\"field_name\\\":\\\"client_settings_minute_volume_alarm\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"VTE (Exhaled Tidal Volume)\\\",\\\"field_name\\\":\\\"client_settings_exhaled_tidal_volume\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Heater/Humidifier Setting  (make fill-in box Alpha/Num)\\\",\\\"field_name\\\":\\\"client_settings_heater_humifier_settings\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"VTI (Tidal Volume Inhaled)\\\",\\\"field_name\\\":\\\"client_settings_tidal_volume_inhaled\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Inspiratory Time\\\",\\\"field_name\\\":\\\"client_settings_inspiratory_time\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Leak\\\",\\\"field_name\\\":\\\"client_settings_leak\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10}],\\\"require_comments\\\":true,\\\"comments_max_length\\\":1000},{\\\"section_title\\\":\\\"Safety Checks\\\",\\\"section_name\\\":\\\"safety_checks\\\",\\\"show_in_order\\\":false,\\\"section_fields\\\":[{\\\"field_title\\\":\\\"Power source\\\",\\\"field_name\\\":\\\"safety_checks_power_source\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"AC\\\",\\\"EB\\\",\\\"IB\\\"]},{\\\"field_title\\\":\\\"Back-up Battery Status\\\",\\\"field_name\\\":\\\"safety_checks_backup_battery_status\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Back Up Ventilator Settings Checked\\\",\\\"field_name\\\":\\\"safety_checks_Back_Up_Ventilator_Settings_Checked\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\",\\\"NA\\\",\\\"No Backup Ventilator Present\\\"]},{\\\"field_title\\\":\\\"O2 Tank Present \\\",\\\"field_name\\\":\\\"safety_checks_o2_tank_present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\",\\\"NA\\\"]},{\\\"field_title\\\":\\\"Portable O2 Present \\\",\\\"field_name\\\":\\\"safety_checks_Portable_O2_Present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\",\\\"NA\\\"]},{\\\"field_title\\\":\\\"Appropriate Sized Mask Present \\\",\\\"field_name\\\":\\\"safety_checks_Appropriate_Sized_Mask_Present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Leak Function (BiPAP/CPAP)\\\",\\\"field_name\\\":\\\"safety_checks_Leak_Function_BiPAP_CPAP\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"BiPAP\\\",\\\"CPAP\\\"]},{\\\"field_title\\\":\\\"Leak Test Q Shift \\\",\\\"field_name\\\":\\\"safety_checks_Leak_Test_Q_Shift\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Heater/Humidifier Water Level\\\",\\\"field_name\\\":\\\"safety_checks_Heater_Humidifier_Water_Level\\\",\\\"input_type\\\":\\\"textbox\\\",\\\"width\\\":\\\"100px\\\",\\\"max_length\\\":10},{\\\"field_title\\\":\\\"Emergency Circuit Prepared \\\",\\\"field_name\\\":\\\"safety_checks_Emergency_circuit_prepared\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Condensation emptied as needed \\\",\\\"field_name\\\":\\\"safety_checks_Condensation_emptied_as_needed\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Ambu bag- appropriate sized bag and mask present \\\",\\\"field_name\\\":\\\"safety_checks_Ambubag_appropriate_sized_bag_and_mask_present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Filters cleaned/changed \\\",\\\"field_name\\\":\\\"safety_checks_Filters_cleaned_changed\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]},{\\\"field_title\\\":\\\"Trachs (same and one size smaller) present \\\",\\\"field_name\\\":\\\"safety_checks_Trachs_same_and_one_size_smaller_present\\\",\\\"input_type\\\":\\\"dropdown\\\",\\\"static_values\\\":[\\\"Yes\\\",\\\"No\\\"]}],\\\"require_comments\\\":true,\\\"comments_max_length\\\":1000}]}\"}"
+        }
+      ]
+    },
+    {
+      "name": "Delete order Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "41a3587f-978c-4b1d-b006-57ea2b9faa39",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "pm.test(\"Your test name\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.OutPutErrorMessage).to.eql(\"\");\r",
+              "});\r",
+              "pm.test(\"Your test name\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.returnValue).to.eql(1);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "6cfec742-aa65-4af8-8866-b5fc4160a576",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "accept",
+            "value": "*/*"
+          },
+          {
+            "key": "hha",
+            "value": "1"
+          },
+          {
+            "key": "user",
+            "value": "1"
+          },
+          {
+            "key": "instance_code",
+            "value": "Working",
+            "type": "text"
+          }
+        ],
+        "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+      },
+      "response": [
+        {
+          "id": "4a84a7b8-23ac-4d51-89fb-1e0d5fad8420",
+          "name": "Working Delete order Copy",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "instance_code",
+                "value": "Working",
+                "type": "text"
+              }
+            ],
+            "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 02:45:32 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "761c0ea7-54c2-4e8b-9397-5023f3b74e82"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "{\"OutPutErrorMessage\":\"\",\"returnValue\":1}"
+        },
+        {
+          "id": "36cd78cd-14f5-4e60-b105-68e51b2a5993",
+          "name": "Local Prod Delete order Copy",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "hha",
+                "value": "1"
+              },
+              {
+                "key": "user",
+                "value": "1"
+              },
+              {
+                "key": "instance_code",
+                "value": "Working",
+                "type": "text"
+              }
+            ],
+            "url": "{{orderurl}}/orders/{{OrderID}}/subforms/ventilators"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 28 Sep 2021 03:12:00 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Server",
+              "value": "Kestrel"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "unique-request-id",
+              "value": "cdb7f868-e628-4150-9c6e-b2442b293403"
+            }
+          ],
+          "cookie": [],
+          "responseTime": null,
+          "body": "{\"OutPutErrorMessage\":\"\",\"returnValue\":1}"
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": {}
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "0ef85b9c-3598-46aa-a0a6-ef0cba5d9281",
+        "type": "text/javascript",
+        "exec": [
+          "console.log(\"Collecttion level pre req\")"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "c4c9379c-8c61-4122-9659-f3232317d35a",
+        "type": "text/javascript",
+        "exec": [
+          "console.log(\"Collecttion level test\")"
+        ]
+      }
+    }
+  ]
+}
